@@ -1,7 +1,6 @@
 #!/bin/bash
 
-nproc=$(nproc)
-export MAKEFLAGS="-j$nproc"
+export MAKEFLAGS="-j$(nproc)"
 
 # WITH_UPX=1
 
@@ -30,12 +29,12 @@ fi
 # create build and release directory
 mkdir build
 mkdir release
-pushd build || exit
+pushd build
 
 # download bubblewrap
 git clone https://github.com/containers/bubblewrap.git
-bubblewrap_version="$(cd bubblewrap && git describe --always)"
-echo "BWRAP_VER=${bubblewrap_version}_$(date +%s)" >> $GITHUB_ENV
+bubblewrap_version="$(cd bubblewrap && git describe --long --tags|sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
+echo "BWRAP_VER=${bubblewrap_version}" >> $GITHUB_ENV
 mv bubblewrap "bubblewrap-${bubblewrap_version}"
 echo "= downloading bubblewrap v${bubblewrap_version}"
 
@@ -49,19 +48,19 @@ if [ "$platform" == "Linux" ]
 fi
 
 echo "= building bubblewrap"
-pushd bubblewrap-"${bubblewrap_version}" || exit
+pushd bubblewrap-${bubblewrap_version}
 env CFLAGS="$CFLAGS -g -O2 -Os -ffunction-sections -fdata-sections" ./autogen.sh
 env CFLAGS="$CFLAGS -g -O2 -Os -ffunction-sections -fdata-sections" ./configure \
     LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 make
-popd || exit # bubblewrap-${bubblewrap_version}
+popd # bubblewrap-${bubblewrap_version}
 
-popd || exit # build
+popd # build
 
 shopt -s extglob
 
 echo "= extracting bubblewrap binary"
-mv build/bubblewrap-"${bubblewrap_version}"/bwrap release 2>/dev/null
+mv build/bubblewrap-${bubblewrap_version}/bwrap release 2>/dev/null
 
 echo "= striptease"
 strip -s -R .comment -R .gnu.version --strip-unneeded release/bwrap 2>/dev/null
@@ -73,7 +72,7 @@ if [[ "$WITH_UPX" == 1 && -x "$(which upx 2>/dev/null)" ]]
 fi
 
 echo "= create release tar.xz"
-tar --xz -acf bubblewrap-static-v"${bubblewrap_version}"-"${platform_arch}".tar.xz release
+tar --xz -acf bubblewrap-static-v${bubblewrap_version}-${platform_arch}.tar.xz release
 # cp bubblewrap-static-*.tar.xz ~/ 2>/dev/null
 
 if [ "$NO_CLEANUP" != 1 ]
