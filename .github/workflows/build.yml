@@ -20,13 +20,7 @@ jobs:
         run: |
             bash -c "${{ github.workspace }}/build.sh"
       - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: bubblewrap-static-*.tar.xz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1
         with:
           artifacts: bubblewrap-static-*.tar.xz
           commit: main
