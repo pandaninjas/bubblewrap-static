@@ -19,6 +19,11 @@ jobs:
       - name: Build
         run: |
             bash -c "${{ github.workspace }}/build.sh"
+      - name: Create a tag
+        uses: laputansoft/github-tag-action@v4.6
+        with:
+          github_token: ${{ env.github-token }}
+          tag: ${{ env.BWRAP_VER }}
       - name: Release
         uses: ncipollo/release-action@v1
         with:
