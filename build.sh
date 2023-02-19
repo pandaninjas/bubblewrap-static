@@ -34,7 +34,7 @@ pushd build
 # download bubblewrap
 git clone https://github.com/containers/bubblewrap.git
 bubblewrap_version="$(cd bubblewrap && git describe --long --tags|sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
-echo "BWRAP_VER=${bubblewrap_version}" >> $GITHUB_ENV
+echo "BWRAP_VER=${bubblewrap_version}_$(date +%s)" >> $GITHUB_ENV
 mv bubblewrap "bubblewrap-${bubblewrap_version}"
 echo "= downloading bubblewrap v${bubblewrap_version}"
 
