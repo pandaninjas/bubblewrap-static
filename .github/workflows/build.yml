@@ -5,17 +5,15 @@ on:
   schedule:
     - cron: "0 0 * * *"
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Check if bubblewrap had a commit in the last day
         run: |
-          bash -c "${{ github.workspace}}/should_run.sh"
+          bash -c "${{ github.workspace}}/should_rebuild.sh"
       - name: Build
         run: |
             bash -c "${{ github.workspace }}/build.sh"
