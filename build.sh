@@ -71,6 +71,8 @@ if [[ "$WITH_UPX" == 1 && -x "$(which upx 2>/dev/null)" ]]
         upx -9 --best release/bwrap 2>/dev/null
 fi
 
+mv release/bwrap .
+
 if [ "$NO_CLEANUP" != 1 ]
     then
         echo "= cleanup"
