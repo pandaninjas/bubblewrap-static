@@ -71,10 +71,6 @@ if [[ "$WITH_UPX" == 1 && -x "$(which upx 2>/dev/null)" ]]
         upx -9 --best release/bwrap 2>/dev/null
 fi
 
-echo "= create release tar.xz"
-tar --xz -acf bubblewrap-static-v${bubblewrap_version}-${platform_arch}.tar.xz release
-# cp bubblewrap-static-*.tar.xz ~/ 2>/dev/null
-
 if [ "$NO_CLEANUP" != 1 ]
     then
         echo "= cleanup"
