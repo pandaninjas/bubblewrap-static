@@ -19,7 +19,7 @@ jobs:
           bash -c "${{ github.workspace}}/should_rebuild.sh"
       - name: Build
         run: |
-            bash -c "${{ github.workspace }}/build.sh"
+          sudo bash -c "${{ github.workspace }}/build.sh"
       - name: Create a tag
         run: |
             curl \
