@@ -32,7 +32,7 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: release/bwrap
+          artifacts: bwrap
           commit: main
           name: ${{ env.BWRAP_VER }}
           tag: ${{ env.BWRAP_VER }}
