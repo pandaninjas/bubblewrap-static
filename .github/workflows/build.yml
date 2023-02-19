@@ -25,3 +25,9 @@ jobs:
           files: bubblewrap-static-*.tar.xz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: bubblewrap-static-*.tar.xz
+          commit: main
+          name: ${{ env.BWRAP_VER }}
