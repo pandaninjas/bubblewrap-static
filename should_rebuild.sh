@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd dirname "$0" || exit
+cd $(dirname "$0") || exit
 
 bubblewrapdate=$(git log -1 --format="%at")
 curdate=$(date +%s)
