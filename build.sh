@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export MAKEFLAGS="-j$(nproc)"
+nproc=$(nproc)
+export MAKEFLAGS="-j$nproc"
 
 # WITH_UPX=1
 
@@ -34,6 +35,7 @@ pushd build || exit
 # download bubblewrap
 git clone https://github.com/containers/bubblewrap.git
 bubblewrap_version="$(cd bubblewrap && git describe --long --tags|sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
+echo "BWRAP_VER='$bubblewrap_version'_$(date +%s)" >> "$GITHUB_ENV"
 mv bubblewrap "bubblewrap-${bubblewrap_version}"
 echo "= downloading bubblewrap v${bubblewrap_version}"
 
