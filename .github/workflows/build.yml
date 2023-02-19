@@ -25,3 +25,4 @@ jobs:
           artifacts: bubblewrap-static-*.tar.xz
           commit: main
           name: ${{ env.BWRAP_VER }}
+          tag: ${{ env.BWRAP_VER }}
