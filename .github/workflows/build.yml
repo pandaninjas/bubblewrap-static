@@ -26,8 +26,8 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }} \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.event.repository.name }}/git/tags \
-            -d '{"tag":${{ env.BWRAP_VER }},"message":"automated commit","object":"${GITHUB_SHA}","type":"commit"}'
+            https://api.github.com/repos/${{ github.repository }}/git/tags \
+            -d '{"tag":"${{ env.BWRAP_VER }}","message":"automated commit","object":"${{ github.sha }}","type":"commit"}'
       - name: Release
         uses: ncipollo/release-action@v1
         with:
