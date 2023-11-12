@@ -16,7 +16,7 @@ jobs:
       - name: Check if bubblewrap had a commit in the last day
         run: |
           bash -c "${{ github.workspace }}/should_rebuild.sh"
-        if: (github.ref_name == 'main' && ${{ github.event_name == 'schedule' }}) || (github.ref_name != 'main')
+        if: ${{ github.event_name == 'schedule' }})
       - name: Build
         run: |
           sudo -E bash -c "${{ github.workspace }}/build.sh"
