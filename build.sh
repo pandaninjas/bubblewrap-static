@@ -31,8 +31,8 @@ mkdir build
 mkdir release
 pushd build
 
-# download bubblewrap
-git clone https://github.com/containers/bubblewrap.git
+# cd to downloaded bubblewrap
+cd $(dirname "$0") || exit
 bubblewrap_version="$(cd bubblewrap && git describe --long --tags|sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
 echo "BWRAP_VER=${bubblewrap_version}_$(date +%s)" >> $GITHUB_ENV
 mv bubblewrap "bubblewrap-${bubblewrap_version}"
