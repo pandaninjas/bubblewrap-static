@@ -1,4 +1,5 @@
 #!/bin/bash
+cd $(dirname "$0") || exit 1
 
 export MAKEFLAGS="-j$(nproc)"
 
