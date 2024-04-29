@@ -1,4 +1,4 @@
-name: Nightly bulids
+name: Nightly builds
 
 on:
   workflow_dispatch:
