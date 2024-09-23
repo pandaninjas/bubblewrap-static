@@ -10,7 +10,7 @@ if [ -x "$(which apt 2>/dev/null)" ]
     then
         apt update && apt install -y \
             build-essential clang pkg-config git autoconf libtool libcap-dev \
-            gettext autopoint upx
+            gettext autopoint meson ninja-build
 fi
 
 if [ -d build ]
@@ -37,21 +37,10 @@ echo "BWRAP_VER=${bubblewrap_version}_$(date +%s)" >> $GITHUB_ENV
 mv bubblewrap "bubblewrap-${bubblewrap_version}"
 echo "= downloading bubblewrap v${bubblewrap_version}"
 
-if [ "$platform" == "Linux" ]
-    then
-        export CFLAGS="-static"
-        export LDFLAGS='--static'
-    else
-        echo "= WARNING: your platform does not support static binaries."
-        echo "= (This is mainly due to non-static libc availability.)"
-fi
-
 echo "= building bubblewrap"
 pushd bubblewrap-${bubblewrap_version}
-env CFLAGS="$CFLAGS -g -O2 -Os -ffunction-sections -fdata-sections" ./autogen.sh
-env CFLAGS="$CFLAGS -g -O2 -Os -ffunction-sections -fdata-sections" ./configure \
-    LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-make
+meson --buildtype=plain release -Dc_args="-static -g -O2 -Os -ffunction-sections -fdata-sections" -Dc_link_args='--static'
+meson compile -C release
 popd # bubblewrap-${bubblewrap_version}
 
 popd # build
