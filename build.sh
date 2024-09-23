@@ -10,7 +10,7 @@ if [ -x "$(which apt 2>/dev/null)" ]
     then
         apt update && apt install -y \
             build-essential clang pkg-config git autoconf libtool libcap-dev \
-            gettext autopoint meson ninja-build
+            gettext autopoint meson ninja-build libselinux1-dev
 fi
 
 if [ -d build ]
