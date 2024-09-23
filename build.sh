@@ -37,7 +37,8 @@ echo "= downloading bubblewrap v${bubblewrap_version}"
 
 echo "= building bubblewrap"
 pushd bubblewrap-${bubblewrap_version}
-meson --buildtype=plain release -Dselinux=disabled -Dc_args="-static -g -O2 -Os -ffunction-sections -fdata-sections" -Dc_link_args='--static'
+git am < 0001-make-deps-static.patch
+meson --buildtype=plain release -Dc_args="-static -g -O2 -Os -ffunction-sections -fdata-sections" -Dc_link_args='--static'
 meson compile -C release
 popd # bubblewrap-${bubblewrap_version}
 
