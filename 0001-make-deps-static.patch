@@ -1,0 +1,29 @@
+From c048fa4dfd656c50aa0c4cdae96455ae3059a23c Mon Sep 17 00:00:00 2001
+From: PandaNinjas <admin@malwarefight.wip.la>
+Date: Sun, 22 Sep 2024 00:00:00 +0100
+Subject: [PATCH] make deps static
+
+---
+ meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index fb3af4e..c06486a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -65,11 +65,12 @@ else
+   python = find_program(get_option('python'))
+ endif
+
+-libcap_dep = dependency('libcap', required : true)
++libcap_dep = dependency('libcap', required : true, static : true)
+
+ selinux_dep = dependency(
+   'libselinux',
+   version : '>=2.1.9',
++  static : true,
+   # if disabled, Meson will behave as though libselinux was not found
+   required : get_option('selinux'),
+ )
+--
+2.34.1
