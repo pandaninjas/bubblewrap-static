@@ -50,7 +50,7 @@ popd # build
 shopt -s extglob
 
 echo "= extracting bubblewrap binary"
-mv build/bubblewrap-${bubblewrap_version}/bwrap release 2>/dev/null
+mv build/bubblewrap-${bubblewrap_version}/release/bwrap release 2>/dev/null
 
 echo "= striptease"
 strip -s -R .comment -R .gnu.version --strip-unneeded release/bwrap 2>/dev/null
